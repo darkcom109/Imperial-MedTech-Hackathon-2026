@@ -82,7 +82,7 @@ export function SectionCards({
                 {metric.value}
               </CardTitle>
               <CardAction>
-                <Badge variant="outline">
+                <Badge variant="outline" className="bg-background">
                   <Icon />
                   {metric.change}
                 </Badge>

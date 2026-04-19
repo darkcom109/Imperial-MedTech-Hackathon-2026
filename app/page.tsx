@@ -538,7 +538,7 @@ export default function Home() {
           <div className="flex flex-1 flex-col gap-4 py-4 md:gap-6 md:py-6">
             <div className="px-4 lg:px-6">
               <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">
-                <span className="font-medium">Notification:</span> {notification}
+                {notification}
               </div>
 
               <Card>
@@ -642,12 +642,12 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="h-full">
                 <CardHeader>
                   <CardTitle>Request stock</CardTitle>
                   <CardDescription>Request matched stock from {partnerAccount.name}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="flex-1 space-y-3">
                   {requestOptions.length > 0 ? (
                     requestOptions.map((option) => (
                       <div

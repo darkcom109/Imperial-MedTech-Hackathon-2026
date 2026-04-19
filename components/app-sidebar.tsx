@@ -122,7 +122,7 @@ export function AppSidebar({
             >
               <a href="#">
                 <CommandIcon className="size-5!" />
-                <span className="text-base font-semibold">Fleming-Rx</span>
+                <span className="text-base font-semibold">Fleming Rx</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

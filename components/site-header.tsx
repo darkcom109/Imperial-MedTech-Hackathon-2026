@@ -25,7 +25,7 @@ export function SiteHeader({
           <div className="min-w-0">
             <h1 className="truncate text-base font-medium">{currentAccountName}</h1>
             <p className="hidden text-sm text-muted-foreground md:block">
-              Demo mode for live transfer requests between two pharmacies
+              Antibiotic transfer workflow for partner pharmacies
             </p>
           </div>
         </div>

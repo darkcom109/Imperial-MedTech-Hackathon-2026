@@ -42,10 +42,6 @@ export default function Page() {
             <div className="px-4 lg:px-6">
               <Card>
                 <CardHeader>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge>Dashboard snapshot</Badge>
-                    <Badge variant="outline">Antibiotic stock network</Badge>
-                  </div>
                   <CardTitle>{dashboardAccount.name}</CardTitle>
                   <CardDescription>
                     Summary view of stock pressure, active transfers, and recent

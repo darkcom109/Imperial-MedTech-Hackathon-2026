@@ -34,12 +34,12 @@ import {
 const navMain = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: <LayoutDashboardIcon />,
   },
   {
-    title: "Stock Alerts",
-    url: "#",
+    title: "Stocks",
+    url: "/",
     icon: <PackageSearchIcon />,
   },
   {

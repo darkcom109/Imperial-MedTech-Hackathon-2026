@@ -35,6 +35,16 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 
+import { Bar, BarChart, CartesianGrid, XAxis, Cell } from "recharts"
+
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+
 type StockStatus = "surplus" | "low-stock"
 type Priority = "Routine" | "Urgent"
 type RequestStatus =
@@ -289,6 +299,22 @@ export default function Home() {
   const currentAccount = accounts.find(
     (account) => account.id === currentAccountId
   )!
+
+  const stockChartData = currentAccount.inventory.map((item) => ({
+    medication: item.medication,
+    quantity: item.quantity,
+    fill:
+      item.status === "surplus"
+        ? "hsl(142 71% 45%)" // green
+        : "hsl(38 92% 50%)", // amber
+  }))
+
+  const stockChartConfig = {
+    quantity: {
+      label: "Stock quantity",
+      color: "hsl(var(--chart-1))",
+    },
+  } satisfies import("@/components/ui/chart").ChartConfig
   const partnerAccount = getPartnerAccount(accounts, currentAccountId)
   const requestOptions = getRequestOptions(currentAccount, partnerAccount)
   const selectedOption =
@@ -682,6 +708,37 @@ export default function Home() {
                     Open request form
                   </Button>
                 </CardFooter>
+              </Card>
+            </div>
+
+            <div className="px-4 lg:px-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Stock overview</CardTitle>
+                  <CardDescription>
+                    Live stock levels for {currentAccount.name}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ChartContainer config={stockChartConfig} className="h-[320px] w-full">
+                    <BarChart accessibilityLayer data={stockChartData}>
+                      <CartesianGrid vertical={false} />
+                      <XAxis
+                        dataKey="medication"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                      />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <ChartLegend content={<ChartLegendContent />} />
+                      <Bar dataKey="quantity" radius={8}>
+                        {stockChartData.map((entry) => (
+                          <Cell key={entry.medication} fill={entry.fill} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ChartContainer>
+                </CardContent>
               </Card>
             </div>
 

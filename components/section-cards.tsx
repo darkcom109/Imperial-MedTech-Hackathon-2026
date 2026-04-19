@@ -11,44 +11,64 @@ import {
 } from "@/components/ui/card"
 import {
   ArrowRightLeftIcon,
+  InboxIcon,
   PillBottleIcon,
-  TrendingDownIcon,
-  TrendingUpIcon,
   TriangleAlertIcon,
+  TrendingUpIcon,
 } from "lucide-react"
 
-const metrics = [
-  {
-    title: "Surplus listings",
-    value: "3",
-    detail: "Amoxicillin and Metformin ready to share",
-    change: "+2 today",
-    icon: TrendingUpIcon,
-  },
-  {
-    title: "Shortage alerts",
-    value: "2",
-    detail: "Ventolin demand needs support this afternoon",
-    change: "High priority",
-    icon: TriangleAlertIcon,
-  },
-  {
-    title: "Open transfers",
-    value: "4",
-    detail: "Two pending approval and two in transit",
-    change: "1 just accepted",
-    icon: ArrowRightLeftIcon,
-  },
-  {
-    title: "Waste prevented",
-    value: "18 packs",
-    detail: "Estimated stock saved from expiry this week",
-    change: "-6% expiry risk",
-    icon: TrendingDownIcon,
-  },
-]
+type SectionCardsProps = {
+  activeTransfers: number
+  currentAccountName: string
+  incomingRequests: number
+  shortageCount: number
+  surplusCount: number
+}
 
-export function SectionCards() {
+export function SectionCards({
+  activeTransfers,
+  currentAccountName,
+  incomingRequests,
+  shortageCount,
+  surplusCount,
+}: SectionCardsProps) {
+  const metrics = [
+    {
+      title: "Surplus items",
+      value: String(surplusCount).padStart(2, "0"),
+      detail: `${currentAccountName} can offer these items today`,
+      change: surplusCount > 0 ? "Ready to share" : "No spare stock",
+      icon: TrendingUpIcon,
+    },
+    {
+      title: "Shortage alerts",
+      value: String(shortageCount).padStart(2, "0"),
+      detail:
+        shortageCount > 0
+          ? "Request flow should focus on these medicines first"
+          : "No low-stock items flagged right now",
+      change: shortageCount > 0 ? "Needs support" : "Stable",
+      icon: TriangleAlertIcon,
+    },
+    {
+      title: "Incoming requests",
+      value: String(incomingRequests).padStart(2, "0"),
+      detail:
+        incomingRequests > 0
+          ? "Switch here to approve, decline, or dispatch"
+          : "No new inbound requests to process",
+      change: incomingRequests > 0 ? "Action needed" : "Queue clear",
+      icon: InboxIcon,
+    },
+    {
+      title: "Active transfers",
+      value: String(activeTransfers).padStart(2, "0"),
+      detail: "Requests in progress across both demo accounts",
+      change: activeTransfers > 0 ? "Shared workflow live" : "Waiting to start",
+      icon: ArrowRightLeftIcon,
+    },
+  ]
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-b *:data-[slot=card]:from-card *:data-[slot=card]:to-muted/40 *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       {metrics.map((metric) => {
@@ -71,7 +91,7 @@ export function SectionCards() {
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="flex items-center gap-2 font-medium">
                 <PillBottleIcon className="size-4" />
-                Pharmacy redistribution pilot
+                Two-account redistribution demo
               </div>
               <div className="text-muted-foreground">{metric.detail}</div>
             </CardFooter>

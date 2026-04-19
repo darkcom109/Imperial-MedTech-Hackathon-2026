@@ -31,117 +31,86 @@ import {
   UsersIcon,
 } from "lucide-react"
 
-const data = {
-  user: {
-    name: "Dr. Maya Patel",
-    email: "GreenCross Pharmacy",
-    avatar: "",
+const navMain = [
+  {
+    title: "Dashboard",
+    url: "#",
+    icon: <LayoutDashboardIcon />,
   },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: (
-        <LayoutDashboardIcon
-        />
-      ),
-    },
-    {
-      title: "Stock Alerts",
-      url: "#",
-      icon: (
-        <PackageSearchIcon
-        />
-      ),
-    },
-    {
-      title: "Transfers",
-      url: "#",
-      icon: (
-        <ArrowRightLeftIcon
-        />
-      ),
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: (
-        <ChartBarIcon
-        />
-      ),
-    },
-    {
-      title: "Partner Pharmacies",
-      url: "#",
-      icon: (
-        <UsersIcon
-        />
-      ),
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: (
-        <Settings2Icon
-        />
-      ),
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: (
-        <CircleHelpIcon
-        />
-      ),
-    },
-    {
-      title: "Notifications",
-      url: "#",
-      icon: (
-        <BellRingIcon
-        />
-      ),
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: (
-        <SearchIcon
-        />
-      ),
-    },
-  ],
-  documents: [
-    {
-      name: "Transfer Log",
-      url: "#",
-      icon: (
-        <FileClockIcon
-        />
-      ),
-    },
-    {
-      name: "Waste Report",
-      url: "#",
-      icon: (
-        <FileChartColumnIcon
-        />
-      ),
-    },
-    {
-      name: "Compliance Notes",
-      url: "#",
-      icon: (
-        <ShieldCheckIcon
-        />
-      ),
-    },
-  ],
+  {
+    title: "Stock Alerts",
+    url: "#",
+    icon: <PackageSearchIcon />,
+  },
+  {
+    title: "Transfers",
+    url: "#",
+    icon: <ArrowRightLeftIcon />,
+  },
+  {
+    title: "Analytics",
+    url: "#",
+    icon: <ChartBarIcon />,
+  },
+  {
+    title: "Partner Pharmacies",
+    url: "#",
+    icon: <UsersIcon />,
+  },
+]
+
+const navSecondary = [
+  {
+    title: "Settings",
+    url: "#",
+    icon: <Settings2Icon />,
+  },
+  {
+    title: "Get Help",
+    url: "#",
+    icon: <CircleHelpIcon />,
+  },
+  {
+    title: "Notifications",
+    url: "#",
+    icon: <BellRingIcon />,
+  },
+  {
+    title: "Search",
+    url: "#",
+    icon: <SearchIcon />,
+  },
+]
+
+const documents = [
+  {
+    name: "Transfer Log",
+    url: "#",
+    icon: <FileClockIcon />,
+  },
+  {
+    name: "Waste Report",
+    url: "#",
+    icon: <FileChartColumnIcon />,
+  },
+  {
+    name: "Compliance Notes",
+    url: "#",
+    icon: <ShieldCheckIcon />,
+  },
+]
+
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  currentAccount: {
+    name: string
+    owner: string
+  }
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  currentAccount,
+  ...props
+}: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -160,12 +129,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={navMain} />
+        <NavDocuments items={documents} />
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={{
+            name: currentAccount.owner,
+            email: currentAccount.name,
+            avatar: "",
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   )
